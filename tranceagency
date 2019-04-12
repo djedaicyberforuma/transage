@@ -1,0 +1,179 @@
+// transagensy1.cpp: определяет точку входа для приложения.
+//
+
+#include "transagensy1.h"
+#include <ctime>
+#include <cstring>
+#define LC_ALL "rus"
+
+using namespace std;
+
+//переменная кол-ва заказов 
+int zakaz,
+//переменная, содержащая номер для выбора места отправки
+acity,
+//переменная, содержащая номер для выбора места назначения 
+bcity,
+//переменная, содержащая номер для выбора вида транспорта
+tr;
+
+class Customer {
+public:
+	//поле места отправки
+	char city1[80];
+	//поле места назначения
+	char city2[80];
+	//поле вида транспорта
+	char trans[80];
+	//поле массы груза
+	int massa;
+	//метод заполнения
+	void input(int i) {
+		//генерация массы груза
+		g[i].massa = rand() % 100 + 1;
+		//генерация места отправки
+		acity = rand() % 15 + 1;
+	tuda:
+		//генерация места назначения
+		bcity = rand() % 15 + 1;
+		//заполнение места отправки
+		switch (acity) {
+		case 1:
+			strcpy_s(g[i].city1, "BERLIN, GERMANY");
+			break;
+		case 2:
+			strcpy_s(g[i].city1, "PEKIN, CHINA");
+			break;
+		case 3:
+			strcpy_s(g[i].city1, "MOSCOW, RUSSIA");
+			break;
+		case 4:
+			strcpy_s(g[i].city1, "WARSAW, POLAND");
+			break;
+		case 5:
+			strcpy_s(g[i].city1, "NEW-DELI, UKRAINE");
+			break;
+		case 6:
+			strcpy_s(g[i].city1, "KIEV, UKRAINE");
+			break;
+		case 7:
+			strcpy_s(g[i].city1, "MINSK, BELARUS");
+			break;
+		case 8:
+			strcpy_s(g[i].city1, "SAINT-PETERSBURG, RUSSIA");
+			break;
+		case 9:
+			strcpy_s(g[i].city1, "BREST, BELARUS");
+			break;
+		case 10:
+			strcpy_s(g[i].city1, "STAMBUL, TURKEY");
+			break;
+		case 11:
+			strcpy_s(g[i].city1, "PRIPYAT, UKRAINE");
+			break;
+		case 12:
+			strcpy_s(g[i].city1, "NUR-SULTAN, KAZAKHSTAN");
+			break;
+		case 13:
+			strcpy_s(g[i].city1, "LUBLIN, POLAND");
+			break;
+		case 14:
+			strcpy_s(g[i].city1, "VLADIVOSTOK, RUSSIA");
+			break;
+		case 15:
+			strcpy_s(g[i].city1, "KATMANDU, NEPAL");
+			break;
+		}
+
+		//заполнение конечного места назначения
+		switch (bcity) {
+		case 1:
+			strcpy_s(g[i].city2, "BERLIN, GERMANY");
+			break;
+		case 2:
+			strcpy_s(g[i].city2, "PEKIN, CHINA");
+			break;
+		case 3:
+			strcpy_s(g[i].city2, "MOSCOW, RUSSIA");
+			break;
+		case 4:
+			strcpy_s(g[i].city2, "WARSAW, POLAND");
+			break;
+		case 5:
+			strcpy_s(g[i].city2, "NEW-DELI, UKRAINE");
+			break;
+		case 6:
+			strcpy_s(g[i].city2, "KIEV, UKRAINE");
+			break;
+		case 7:
+			strcpy_s(g[i].city2, "MINSK, BELARUS");
+			break;
+		case 8:
+			strcpy_s(g[i].city2, "SAINT-PETERSBURG, RUSSIA");
+			break;
+		case 9:
+			strcpy_s(g[i].city2, "BREST, BELARUS");
+			break;
+		case 10:
+			strcpy_s(g[i].city2, "STAMBUL, TURKEY");
+			break;
+		case 11:
+			strcpy_s(g[i].city2, "PRIPYAT, UKRAINE");
+			break;
+		case 12:
+			strcpy_s(g[i].city2, "NUR-SULTAN, KAZAKHSTAN");
+			break;
+		case 13:
+			strcpy_s(g[i].city2, "LUBLIN, POLAND");
+			break;
+		case 14:
+			strcpy_s(g[i].city2, "VLADIVOSTOK, RUSSIA");
+			break;
+		case 15:
+			strcpy_s(g[i].city2, "KATMANDU, NEPAL");
+			break;
+		}
+
+		//при совпадении места отправки и места назначения - повторная генерация места отправки
+		if (!strcmp(g[i].city1, g[i].city2))
+			goto tuda;
+		//генерация вида транспорта
+		if ((acity <= 3) && (bcity <= 3))
+			tr = rand() % 3 + 1;
+		else if (((acity <= 8) && (bcity >= 4 && bcity <= 8)) || ((bcity <= 8) && (acity >= 4 && acity <= 8)))
+			tr = rand() % 2 + 1;
+		else
+			tr = 1;
+		//выбор вида транспорта
+		switch (tr) {
+		case 1:
+			strcpy_s(g[i].trans, "avto");
+			break;
+		case 2:
+			strcpy_s(g[i].trans, "train");
+			break;
+		case 3:
+			strcpy_s(g[i].trans, "avia");
+			break;
+		}
+	}
+}g[3];
+//ф-ия вывода
+void output() {
+	for (int i = 0; i < zakaz; i++) {
+		cout << "Тип транспорта: " << g[i].trans << endl;
+		cout << "Место отправки: " << g[i].city1 << endl;
+		cout << "Место назначения: " << g[i].city2 << endl;
+		cout << endl;
+	}
+}
+int main() {
+	srand(time(0));
+	//кол-во заказов
+	zakaz = rand() % 3 + 1;
+	for (int i = 0; i < zakaz; i++)
+		g[i].input(i);
+	output();
+	system("pause");
+	return 0;
+}
